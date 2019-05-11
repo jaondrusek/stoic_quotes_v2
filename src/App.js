@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { quote: "" };
+  }
+  getQuote() {
+    fetch("http://localhost:9000/quote")
+        .then(res => res.text())
+        .then(res => this.setState({ quote: res }));
+  }
+  componentDidMount() {
+    this.interval = setInterval(() => this.getQuote(), 1000);
+
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
+        <div className="App-header">
+          <p className="Title-text">Meditations</p>
+        </div>
+        <div className="App-body">
+          <p className="Body-text">
+            {this.state.quote}
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        </div>
+        <div className="App-footer">
+          <p className="Footer-text">Marcus Aurelius</p>
+        </div>
       </div>
     );
   }
