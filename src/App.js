@@ -12,7 +12,8 @@ class App extends Component {
         .then(res => this.setState({ quote: res }));
   }
   componentDidMount() {
-    this.interval = setInterval(() => this.getQuote(), 1000);
+    this.getQuote();
+    this.interval = setInterval(() => this.getQuote(), 10000);
 
   }
   componentWillUnmount() {
