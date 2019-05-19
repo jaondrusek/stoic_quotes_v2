@@ -3,11 +3,9 @@ const {Client} = require('pg');
 var Quote = module.exports = {
     get_quote: function(callback) {
         const client = new Client({ 
-        user: 'postgres',
-        database: 'postgres',
-        password: 'macey!568923',
+            connectionString: process.env.DATABASE_URL,
         });
-        client.connect();
+        client.connect();        
         client.query('select quote from quotes where chosen = 1 limit 1;', (err, res) => {
             if (err) {
                 return console.error(err.message);
@@ -19,9 +17,7 @@ var Quote = module.exports = {
     },
     set_new_quote: function() {
         const client = new Client({ 
-            user: 'postgres',
-            database: 'postgres',
-            password: 'macey!568923',
+            connectionString: process.env.DATABASE_URL,
         });
         client.connect();
         client.query('update quotes set chosen = 0 where chosen = 1', (err, res) => {

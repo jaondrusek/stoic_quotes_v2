@@ -7,7 +7,7 @@ class App extends Component {
     this.state = { quote: "" };
   }
   getQuote() {
-    fetch("http://localhost:9000/quote")
+    fetch("/quote")
         .then(res => res.text())
         .then(res => this.setState({ quote: res }));
   }
